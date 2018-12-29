@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ -z "$(which git-secret)" ]; then exit 0; fi
+status=0
+
+## Hide all secret files using git-secret.
+echo "Hiding secret files:"
+for secret in $(git secret list); do
+  if [ "$(git secret changes $secret | wc -l)" -gt 2 ]; then
+    status=1
+  fi
+done
+
+if ! git secret hide -m; then exit 2; fi
+if [ "$status" -ne 0 ]; then
+  echo "Some files were modified by git-secret: please stage the ones you'd \
+like to keep."
+else
+  ## Separate pre-commit output from Git CLI output.
+  echo
+fi
+
+exit $status

@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+ database:
+    build:
+      context: ./external/postgres
+      cache_from:
+        - postgres:10.5-alpine
+    container_name: koup-db
+    env_file: ./external/postgres/configs/.env
+    networks:
+      - api_net
+    volumes:
+      - postgres.data:/var/lib/postgresql/data # persist data
+    ports:
+      - "5432:5432"
+
+networks:
+  api_net:
+
+volumes:
+  postgres.data:

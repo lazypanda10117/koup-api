@@ -28,14 +28,6 @@ deleteRooms [pwd]
 
 
 
-Universe:
-
-id
-
-foreign_key: room
-
-
-
 Room:
 
 id
@@ -62,3 +54,4 @@ id
 
 hand: {card array}
 
+room: foreign key 
