@@ -1,5 +1,5 @@
 ## ----- Variables -----
-ENV = dev
+ENV = 1 # 0 for production, 1 for development
 DB_VOL_NAME = postgres.data
 STACK_NAME = $(shell basename $$PWD)
 
@@ -50,7 +50,7 @@ FLSK = pipenv run flask run
 
 run:
 	@echo "Starting Flask server ($(ENV))..."
-	@if [ "$(ENV)" == dev ]; then \
+	@if [ "$(ENV)" -eq 1 ]; then \
 	   export FLASK_ENV=development && export FLASK_DEBUG=1 && \
 	          $(FLSK); \
 	 else \
@@ -60,33 +60,3 @@ run:
 install:
 	@echo "Installing dependencies using 'pipenv'..."
 	@pipenv install --dev
-
-
-## [Docker commands]
-.PHONY: up up-build-logs down prune prune-f
-
-## DKCMP starts docker-compose using the dev config if ENV is dev.
-DKCMP = docker-compose
-DK = docker
-
-## TARG is name of a particular target image / service.
-TARG =
-build:
-	@$(DKCMP) build $(TARG)
-up:
-	@$(DKCMP) up -d $(TARG)
-up-build-logs:
-	@$(DKCMP) up-build logs $(TARG)
-down:
-	@$(DKCMP) down $(TARG)
-
-## Prunes all Docker images, networks, and containers, in that order.
-prune:
-	@$(DK) container prune; $(DK) image prune; $(DK) network prune;
-prune-f:
-	@$(DK) container prune -f; $(DK) image prune -f; $(DK) network prune -f
-
-## Removes the database data volume.
-clean:
-	@echo "Cleaning database data volume..."
-	@$(DK) volume rm $(STACK_NAME)_$(DB_VOL_NAME)

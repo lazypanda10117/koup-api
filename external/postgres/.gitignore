@@ -1,2 +1,0 @@
-## The mounted data volume for the Postgres container, during development.
-/data/*
