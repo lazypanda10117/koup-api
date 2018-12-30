@@ -43,7 +43,7 @@ reveal-secrets:
 
 
 ## [Python commands]
-.PHONY: prod run install clean
+.PHONY: run install
 
 ## FLSK starts the flask server.
 FLSK = pipenv run flask run

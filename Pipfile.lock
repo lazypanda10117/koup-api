@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "86c6926ebe75f57c66e8fa163d48f38425f3fe7ca0734e5a0414e2a667b89ef8"
+            "sha256": "091c975f1c56d0b667a73ff27e2168ea8e4a386ddcb561f739102b4a957733d9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -45,14 +45,6 @@
             "index": "pypi",
             "version": "==2.0.0"
         },
-        "flask-sqlalchemy": {
-            "hashes": [
-                "sha256:3bc0fac969dd8c0ace01b32060f0c729565293302f0c4269beed154b46bec50b",
-                "sha256:5971b9852b5888655f11db634e87725a9031e170f37c0ce7851cf83497f56e53"
-            ],
-            "index": "pypi",
-            "version": "==2.3.2"
-        },
         "graphene": {
             "hashes": [
                 "sha256:b8ec446d17fa68721636eaad3d6adc1a378cb6323e219814c8f98c9928fc9642",
@@ -60,6 +52,14 @@
             ],
             "index": "pypi",
             "version": "==2.1.3"
+        },
+        "graphene-sqlalchemy": {
+            "hashes": [
+                "sha256:5bfc93986c5e6001861e8cdfe33eeb5094ca1f30efde6822387e13070ec3ab82",
+                "sha256:8260a128f360eda5437147a3cb72809e267fa8e2464f9996ff95ddc47239dcec"
+            ],
+            "index": "pypi",
+            "version": "==2.1.0"
         },
         "graphql-core": {
             "hashes": [
@@ -79,6 +79,14 @@
                 "sha256:e5f82add4b3d5580aa1f1e7d9f00e944ad3abe1b65eb337e611d6a77cc20f231"
             ],
             "version": "==1.1.1"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471",
+                "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"
+            ],
+            "index": "pypi",
+            "version": "==19.9.0"
         },
         "itsdangerous": {
             "hashes": [
@@ -184,6 +192,13 @@
                 "sha256:7357592bc7e881a95e0c2013b73326f704953301ab551fbc8133a6fadab84105"
             ],
             "version": "==1.6.1"
+        },
+        "singledispatch": {
+            "hashes": [
+                "sha256:5b06af87df13818d14f08a028e42f566640aef80805c3b50c5056b086e3c2b9c",
+                "sha256:833b46966687b3de7f438c761ac475213e53b306740f1abfaa86e1d1aae56aa8"
+            ],
+            "version": "==3.4.0.3"
         },
         "six": {
             "hashes": [

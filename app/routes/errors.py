@@ -1,5 +1,4 @@
 from werkzeug.exceptions import InternalServerError
-
 from app import app
 
 

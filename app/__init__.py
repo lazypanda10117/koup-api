@@ -7,8 +7,15 @@ version = "0.1.0"
 # Initialize Flask app.
 app = Flask(__name__)
 
-# Configure Flask.
 from app import config  # noqa: F401
-
-# Import all routes so that they are registered in Flask.
 from app import routes  # noqa: F401
+from app import schemas  # noqa: F401
+
+app.add_url_rule( '/api', view_func=GraphQLView.as_view(
+    'api',
+    schema=schemas.schema,
+    graphiql=True
+))
+
+if __name__ == '__main__':
+    app.run(threaded=True, debug=True)

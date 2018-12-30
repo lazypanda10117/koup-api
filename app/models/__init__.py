@@ -1,7 +1,3 @@
-from app.db import db
-
 from app.models import (  # noqa: F401
-    room, player, card
+    model_card, model_player, model_room
 )
-
-db.create_all()
