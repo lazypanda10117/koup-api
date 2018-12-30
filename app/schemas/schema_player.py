@@ -1,15 +1,15 @@
 import graphene
+from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
 from app.models.model_player import ModelPlayer
 
 
-class PlayerAttribute:
-    hand = graphene.List(graphene.Int)
-    room = graphene.ID(description="ID of Room that Player Belongs To.")
-
-
-class Player(SQLAlchemyObjectType, PlayerAttribute):
+class Player(SQLAlchemyObjectType):
     class Meta:
         model = ModelPlayer
         interfaces = (graphene.relay.Node,)
 
+
+class PlayerConnection(relay.Connection):
+    class Meta:
+        node = Player

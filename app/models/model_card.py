@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
 
 
-class ModelCard(Base):
+class ModelCard(Base, Func):
     __tablename__ = "card"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)

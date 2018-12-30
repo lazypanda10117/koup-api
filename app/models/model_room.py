@@ -4,7 +4,7 @@ from app.utils.datetime import datetime
 from app.models.func import Func
 from app.models.model_player import ModelPlayer
 from sqlalchemy import Column, Integer, String, ARRAY, Enum, Boolean, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import validates
 
 
@@ -14,12 +14,12 @@ class GameState(enum.Enum):
     onGoing = 3
 
 
-class ModelRoom(Base):
+class ModelRoom(Base, Func):
     __tablename__ = "room"
     id = Column(Integer, primary_key=True)
     key = Column(String, nullable=False, unique=True)
     playerCap = Column(Integer, default=4, nullable=False)
-    players = relationship("ModelPlayer", backref='room', lazy=True)
+    players = relationship(ModelPlayer, backref=backref('room', cascade='delete,all'))
     deck = Column(ARRAY(Integer))
     state = Column(Enum(GameState), default=GameState.waiting)
     swapping = Column(Boolean, default=False)

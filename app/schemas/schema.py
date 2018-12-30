@@ -1,18 +1,15 @@
 import graphene
-from graphene_sqlalchemy import SQLAlchemyConnectionField
-import app.schemas.schema_room as room
-import app.schemas.schema_player as player
-import app.schemas.schema_card as card
+from graphene import relay
+from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType, utils
+from .schema_card import Card, CardConnection
+from .schema_player import Player, PlayerConnection
+from .schema_room import Room, RoomConnection
 
 
 class Query(graphene.ObjectType):
-    node = graphene.relay.Node.Field()
-    room = graphene.relay.Node.Field(room.Room)
-    roomList = SQLAlchemyConnectionField(room.Room)
-    player = graphene.relay.Node.Field(player.Player)
-    playerList = SQLAlchemyConnectionField(player.Player)
-    card = graphene.relay.Node.Field(card.Card)
-    cardList = SQLAlchemyConnectionField(card.Card)
+    node = relay.Node.Field()
+    card = relay.Node.Field(Card)
+    all_cards = SQLAlchemyConnectionField(CardConnection)
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, types=[Card])

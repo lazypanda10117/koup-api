@@ -1,11 +1,10 @@
 from app.db import Base
 from app.models.func import Func
 from sqlalchemy import Column, Integer, ARRAY, ForeignKey
-from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import validates
 
 
-class ModelPlayer(Base):
+class ModelPlayer(Base, Func):
     __tablename__ = "player"
     id = Column(Integer, primary_key=True)
     hand = Column(ARRAY(Integer))
