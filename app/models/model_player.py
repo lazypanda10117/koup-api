@@ -10,7 +10,7 @@ class ModelPlayer(db.Model, Func):
     hand = db.Column(db.ARRAY(db.Integer))
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
 
-    def __init__(self, room_id, hand=[]):
+    def __init__(self, room_id, hand=list()):
         super().__init__(
             hand=hand,
             room_id=room_id

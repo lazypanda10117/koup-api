@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-flask db init
-flask db migrate
-flask db upgrade
-gunicorn -b 0.0.0.0:3000 app:app
+if [ -d ./migrations ]
+then
+    echo "Building with Existing Migrations"
+    $(make prod-update)
+else
+    echo "Building from Scratch"
+    $(make prod-init)
+fi

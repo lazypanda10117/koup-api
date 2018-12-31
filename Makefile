@@ -43,12 +43,12 @@ reveal-secrets:
 
 
 ## [Python commands]
-.PHONY: run install prod
+.PHONY: dev-run install prod-init prod-update prod-run
 
 ## FLSK starts the flask server.
 FLSK = pipenv run flask run
 
-run:
+dev-run:
 	@echo "Starting Flask server ($(ENV))..."
 	@if [ "$(ENV)" -eq 1 ]; then \
 	   export FLASK_ENV=development && export FLASK_DEBUG=1 && \
@@ -61,8 +61,16 @@ install:
 	@echo "Installing dependencies using 'pipenv'..."
 	@pipenv install --dev
 
-prod:
+prod-init:
 	@flask db init
 	@flask db migrate
 	@flask db upgrade
+	@gunicorn -b 0.0.0.0:3000 app:app
+
+prod-update:
+	@flask db migrate
+	@flask db upgrade
+	@gunicorn -b 0.0.0.0:3000 app:app
+
+prod-run:
 	@gunicorn -b 0.0.0.0:3000 app:app

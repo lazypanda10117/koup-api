@@ -3,6 +3,8 @@ from random import shuffle, randint
 from sqlalchemy.orm import validates
 from app.db import db
 from app.models.func import Func
+from app.models.model_card import ModelCard
+import app.utils.generic as generic
 import app.utils.datetime as datetime
 import app.utils.converter as converter
 
@@ -37,6 +39,7 @@ class ModelRoom(db.Model, Func):
             max_idle_time=30,
             last_update=datetime.datetime.utcnow()
     ):
+        deck = [card.id for card in generic.query_object(ModelCard)]
         shuffle(deck)
         key = randint(1, 100001)
         super().__init__(

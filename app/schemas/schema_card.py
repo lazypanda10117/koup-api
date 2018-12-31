@@ -7,7 +7,7 @@ from app.models.model_card import ModelCard
 
 
 class CardAttribute:
-    name = graphene.String(description="Name of Card.")
+    type = graphene.String(description="Type of Card.")
 
 
 class Card(SQLAlchemyObjectType, CardAttribute):
