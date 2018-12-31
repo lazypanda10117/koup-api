@@ -73,7 +73,15 @@ class GetCardsInput(graphene.InputObjectType):
     numCards = graphene.Int(required=True, default=2, description="Number of Cards to Get from Top of Draw Pile.")
 
 
-class GetCards(graphene.Mutation):
+class SwapAction:
+    def setSwapping(self, room_id, swapping):
+        room = generic.get_object(ModelRoom, dict(id=room_id))
+        room_data = gqlUtil.dumps(room)
+        room_data['swapping'] = swapping
+        generic.update_object(ModelRoom, room_data)
+
+
+class GetCards(graphene.Mutation, SwapAction):
     player = graphene.Field(lambda: Player, description="Player updated by this mutation.")
 
     class Arguments:
@@ -99,6 +107,7 @@ class GetCards(graphene.Mutation):
 
     def mutate(self, info, input):
         player = self.get_action(input)
+        self.setSwapping(player.room_id, False)
         return GetCards(player=player)
 
 
@@ -107,7 +116,7 @@ class PutCardsInput(graphene.InputObjectType):
     hand = graphene.List(required=True, description="Cards to be Swapped")
 
 
-class PutCards(graphene.Mutation):
+class PutCards(graphene.Mutation, SwapAction):
     class Arguments:
         input = PutCardsInput(required=True)
 
@@ -144,6 +153,7 @@ class PutCards(graphene.Mutation):
 
     def mutate(self, info, input):
         player = self.put_action(input)
+        self.setSwapping(player.room_id, False)
         return PutCards(player=player)
 
 

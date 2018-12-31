@@ -3,7 +3,7 @@ from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyConnectionField
 from .schema_card import Card, CardConnections, CreateCard, UpdateCard, DeleteCard
 from .schema_player import Player, PlayerConnections, \
-    CreatePlayer, UpdatePlayer, DeletePlayer, SwapCards
+    CreatePlayer, UpdatePlayer, DeletePlayer, PutCards, GetCards, RevealCards
 from .schema_room import Room, RoomConnections, CreateRoom, UpdateRoom, DeleteRoom
 
 
@@ -27,6 +27,10 @@ class Mutation(graphene.ObjectType):
     createRoom = CreateRoom.Field()
     updateRoom = UpdateRoom.Field()
     deleteRoom = DeleteRoom.Field()
+
+    swapStart = GetCards.Field()
+    swapEnd = PutCards.Field()
+    revealCard = RevealCards.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation, types=[Card, Player, Room])

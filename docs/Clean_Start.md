@@ -12,21 +12,13 @@ GRANT ALL PRIVILEGES ON DATABASE koup TO robot;
 
 ```
 
-(3) Regenerate Migration
-```python
-flask db init
-flask db migrate
-flask db upgrade
-
-```
-
-(4) Start the Server
+(3) Start the Server
 ```bash
-./scripts/build.sh
+make prod
 ```
 
-(5) Setting Up API (Go to path from base URL)
+(4) Setting Up API (Go to path from base URL)
 
 ```url
-   baseURL/setup
+baseURL/setup
 ```
