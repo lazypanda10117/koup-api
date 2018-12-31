@@ -11,17 +11,21 @@ It is a replica of the boardgame Coup.
 \
 __Brief Description of API:__
 
-GraphQL endpoint
+GraphQL Endpoint
 ```bash
 /graphql
 ```
+More details in [documentation](./docs/GraphQL_API.md)
 \
-Setup endpoint (For Setting Up the Service)
+\
+\
+Setup Endpoint (For Setting Up the Service)
 ```bash
 /setup
 ```
 \
-Housekeeping endpoint (For Purging Expired Rooms)
+\
+Housekeeping Endpoints (For Purging Expired Rooms)
 ```bash
 # Clear rooms that has last_updated time over 'minutes'
 
