@@ -1,6 +1,6 @@
 # GraphQL Endpoint
 
-#### Room Queries:
+## Room Queries:
 
 > Getting All Rooms
 ```graphql
@@ -17,6 +17,7 @@ query{
   }
 }
 ```
+
 
 > Getting a Room with Room ID
 ```graphql
@@ -58,9 +59,10 @@ query{
 }
 ```
 
-#### Player Queries:
 
-> Getting All Player
+## Player Queries:
+
+> Getting All Players
 ```graphql
 query{
   allPlayers{
@@ -72,6 +74,7 @@ query{
   }
 }
 ```
+
 
 > Getting a Player with Player ID
 ```graphql
@@ -113,30 +116,6 @@ query{
 }
 ```
 
-> Getting All Players
-```graphql
-query{
-  allPlayers{
-    edges{
-      node{
-        ... fields ...
-      }
-    }
-  }
-}
-```
-
-> Getting a Player with Player ID
-```graphql
-query{
-  player(id:<string: player id>){
-    player{
-      ... fields ...
-    }
-  }
-}
-```
-
 
 > Player Creating a Room
 ```graphql
@@ -155,6 +134,7 @@ mutation{
   }
 }
 ```
+
 
 > Player Starting a Room with Room Key (Automatically Creates the Player)
 ```graphql
@@ -183,6 +163,7 @@ mutation{
 }
 ```
 
+
 > Player Starting Swap Card
 ```graphql
 mutation{
@@ -196,6 +177,7 @@ mutation{
   }
 }
 ```
+
 
 > Player Ending Swap Card
 ```graphql
@@ -211,6 +193,7 @@ mutation{
 }
 ```
 
+
 > Player Reveal Card (Put Card then Get Card)
 ```graphql
 mutation{
@@ -225,7 +208,8 @@ mutation{
 }
 ```
 
-#### Card Queries:
+
+## Card Queries:
 
 > Getting All Cards
 ```graphql
@@ -239,6 +223,7 @@ query{
   }
 }
 ```
+
 
 > Getting a Card with Card ID
 ```graphql
