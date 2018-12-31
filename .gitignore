@@ -106,3 +106,6 @@ venv.bak/
 
 ## IntelliJ IDEA:
 .idea/
+
+## Migration Files:
+./migrations
