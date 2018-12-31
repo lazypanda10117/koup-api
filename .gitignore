@@ -108,4 +108,4 @@ venv.bak/
 .idea/
 
 ## Migration Files:
-./migrations
+migrations/
