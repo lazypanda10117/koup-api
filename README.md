@@ -1,8 +1,11 @@
 # API for Koup (@stevenw47)
 
+Demo: https://koup-api.herokuapp.com/
+
+\
 __What is Koup?__ 
 
-It is a replica of boardgame Coup.
+It is a replica of the boardgame Coup.
 
 \
 \
