@@ -5,10 +5,11 @@ from app.models.model_card import ModelCard
 
 
 def setup():
-    cardList = ['Duke', 'Contessa', 'Assassin', 'Ambassador', 'Captain']
-    for card in cardList:
-        for made in range(3):
-            db.session.add(ModelCard(card))
-
-    db.session.commit()
-    db.session.close()
+    if not db.session.query(ModelCard).all().count():
+        cardList = ['Duke', 'Contessa', 'Assassin', 'Ambassador', 'Captain']
+        for card in cardList:
+            for made in range(3):
+                db.session.add(ModelCard(card))
+        db.session.commit()
+    else:
+        raise SystemError('You Have Already Setup the Koup API.')

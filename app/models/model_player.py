@@ -15,3 +15,10 @@ class ModelPlayer(db.Model, Func):
             hand=hand,
             room_id=room_id
         )
+
+    def __repr_json__(self):
+        return dict(
+            id=self.id,
+            hand=self.hand,
+            room_id=self.room_id
+        )

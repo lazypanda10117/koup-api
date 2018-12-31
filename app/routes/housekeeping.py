@@ -7,7 +7,7 @@ from app.models.model_room import ModelRoom
 
 @app.route("/housekeeping/purge/<idle_min>", methods=["GET"])
 def purge_idle_rooms(idle_min):
-    if int(idle_min):
+    if idle_min.isdigit():
         idle_min = int(idle_min)
         num_purged = db.session.query(ModelRoom).filter(
             ModelRoom.last_update < datetime.time_back(idle_min)

@@ -12,3 +12,9 @@ class ModelCard(db.Model, Func):
         super().__init__(
             name=name
         )
+
+    def __repr_json__(self):
+        return dict(
+            id=self.id,
+            name=self.name
+        )

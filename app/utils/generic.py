@@ -1,6 +1,17 @@
 from app.db import db
 
 
+def get_object(cls, data):
+    id = data['id']
+    queryCmd = (lambda id: db.session.query(cls).get(id))
+    try:
+        obj = queryCmd(id)
+    except:
+        print("Failed to get object")
+        raise
+    return queryCmd(id)
+
+
 def create_object(cls, data):
     obj = cls(**data)
     db.session.add(obj)

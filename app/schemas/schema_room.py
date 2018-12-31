@@ -5,6 +5,7 @@ import app.utils.datetime as datetime
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
 from app.models.model_room import ModelRoom
+from random import shuffle
 
 
 class RoomAttribute:

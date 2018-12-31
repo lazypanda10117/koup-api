@@ -2,6 +2,7 @@ from app.db import db
 from enum import IntEnum
 import app.utils.datetime as datetime
 from app.models.func import Func
+from random import random, shuffle, randint
 from sqlalchemy.orm import validates
 
 
@@ -31,16 +32,31 @@ class ModelRoom(db.Model, Func):
 
     def __init__(
             self,
-            key,
+            key=0,
             player_cap=4,
-            deck=range(15),
+            deck=list(range(15)),
             max_idle_time=30,
             last_update=datetime.datetime.utcnow()
     ):
+        deck = shuffle(deck)
+        key = randint(1, 100001)
         super().__init__(
             key=key,
             player_cap=player_cap,
             deck=deck,
             max_idle_time=max_idle_time,
             last_update=last_update
+        )
+
+    def __repr_json__(self):
+        return dict(
+            id=self.id,
+            key=self.key,
+            player_cap=self.player_cap,
+            players=self.players,
+            deck=self.deck,
+            state=self.state,
+            swapping=self.swapping,
+            max_idle_time=self.max_idle_time,
+            last_update=self.last_update
         )
