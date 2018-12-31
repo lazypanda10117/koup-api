@@ -28,8 +28,6 @@ def update_object(cls, data):
     id = data['id']
     queryCmd = (lambda id: db.session.query(cls).get(id))
     obj = queryCmd(id)
-    print("data to be updataed: ")
-    print(data)
     obj.update_from_dict(data)
     try:
         db.session.commit()
@@ -51,4 +49,9 @@ def delete_object(cls, data):
         db.session.rollback()
         print("Failed to delete object")
         raise
+    return obj
+
+
+def query_object(cls, **kwargs):
+    obj = db.session.query(cls).filter_by(**kwargs).all()
     return obj

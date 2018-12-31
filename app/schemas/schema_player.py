@@ -6,7 +6,8 @@ import app.utils.graphqlUtil as gqlUtil
 import app.utils.datetime as datetime
 import app.utils.generic as generic
 from app.models.model_player import ModelPlayer
-from app.models.model_room import ModelRoom
+from app.models.model_room import ModelRoom, GameState
+from app.schemas.schema_room import Room
 
 
 class PlayerAttribute:
@@ -85,13 +86,19 @@ class SwapAction:
 
 class GetCards(graphene.Mutation, SwapAction):
     @staticmethod
-    def get_action(input):
-        data = gqlUtil.input_to_dictionary(input)
+    def get_validation(data):
+        if data.get('swapping'):
+            raise SystemError('Swapping In Progress. Cannot Get New Cards.')
+
+    @staticmethod
+    def get_action(data):
         player = generic.get_object(ModelPlayer, data)
         player_data = gqlUtil.serialize(player)
 
         room = generic.get_object(ModelRoom, dict(id=player.room_id))
         room_data = gqlUtil.serialize(room, ['players'])
+
+        GetCards.get_validation(room_data)
 
         get_hand = room.deck[:data['numCards']]
 
@@ -108,8 +115,9 @@ class GetCards(graphene.Mutation, SwapAction):
         input = GetCardsInput(required=True)
 
     def mutate(self, info, input):
-        player = GetCards.get_action(input)
-        GetCards.setSwapping(player.room_id, False)
+        data = gqlUtil.input_to_dictionary(input)
+        player = GetCards.get_action(data)
+        GetCards.setSwapping(player.room_id, True)
         return GetCards(player=player)
 
 
@@ -125,7 +133,7 @@ class PutCards(graphene.Mutation, SwapAction):
         input = PutCardsInput(required=True)
 
     @staticmethod
-    def putValidation(swapCards, selfCards, deck):
+    def put_validation(swapCards, selfCards, deck):
         for card in swapCards:
             if card in deck:
                 err = "Card Already in Deck"
@@ -135,16 +143,14 @@ class PutCards(graphene.Mutation, SwapAction):
                 raise SystemError(err)
 
     @staticmethod
-    def put_action(input):
-        data = gqlUtil.input_to_dictionary(input)
-
+    def put_action(data):
         player = generic.get_object(ModelPlayer, data)
         player_data = gqlUtil.serialize(player)
 
         room = generic.get_object(ModelRoom, dict(id=player.room_id))
-        room_data = gqlUtil.serialize(room)
+        room_data = gqlUtil.serialize(room, ['players'])
 
-        PutCards.putValidation(data['hand'], player.hand, room.deck)
+        PutCards.put_validation(data['hand'], player.hand, room.deck)
 
         dumped_hand = data['hand']
         for card in dumped_hand:
@@ -159,7 +165,8 @@ class PutCards(graphene.Mutation, SwapAction):
         return player
 
     def mutate(self, info, input):
-        player = PutCards.put_action(input)
+        data = gqlUtil.input_to_dictionary(input)
+        player = PutCards.put_action(data)
         PutCards.setSwapping(player.room_id, False)
         return PutCards(player=player)
 
@@ -172,7 +179,61 @@ class RevealCards(graphene.Mutation):
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
-        PutCards.put_action(input)
-        player = GetCards.get_action(GetCardsInput(id=data['id'], numCards=1))
+        PutCards.put_action(data)
+        player = GetCards.get_action(dict(id=data['id'], numCards=1))
         return RevealCards(player=player)
+
+
+class RoomActionInput(graphene.InputObjectType):
+    room_key = graphene.ID(required=True, description="ID of Room that Player Belongs To.")
+
+
+class StartRoom(graphene.Mutation):
+    room = graphene.Field(lambda: Room, description="Room updated by this mutation (start room).")
+
+    class Arguments:
+        input = RoomActionInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        room = generic.query_object(ModelRoom, key=data['room_key'])
+        if room:
+            room = room[0]
+            if room.state == int(GameState.Waiting):
+                room_data = dict(id=room.id, state=int(GameState.Running))
+                room = generic.update_object(ModelRoom, room_data)
+            else:
+                raise SystemError('Cannot Start Room as Game is Running.')
+        else:
+            raise SystemError('No Such Room with Key: ' + data['room_key'] + ' Exists.')
+
+        return StartRoom(room=room)
+
+
+class JoinRoom(graphene.Mutation):
+    player = graphene.Field(lambda: Player, description="Room updated by this mutation (join room).")
+
+    class Arguments:
+        input = RoomActionInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        room = generic.query_object(ModelRoom, key=data['room_key'])
+        if room:
+            room = room[0]
+            if room.state == int(GameState.Waiting):
+                if room.player_cap > len(room.players):
+                    player = generic.create_object(ModelPlayer, dict(room_id=room.id))
+                    get_card_dict = gqlUtil.serialize(player)
+                    get_card_dict['numCards'] = 2
+                    GetCards.get_action(get_card_dict)
+                    player = generic.get_object(ModelPlayer, dict(id=player.id))
+                else:
+                    raise SystemError('Cannot Join Room as Room Capacity Reached.')
+            else:
+                raise SystemError('Cannot Join Room as Game is Running.')
+        else:
+            raise SystemError('No Such Room with Key: ' + data['room_key'] + ' Exists.')
+        return JoinRoom(player=player)
+
 

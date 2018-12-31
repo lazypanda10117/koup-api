@@ -9,8 +9,7 @@ import app.utils.converter as converter
 
 class GameState(IntEnum):
     Waiting = 1
-    Initializing = 2
-    Running = 3
+    Running = 2
 
 
 class ModelRoom(db.Model, Func):
