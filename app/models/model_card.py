@@ -1,13 +1,14 @@
-from app.db import Base
+from app.db import db
 from app.models.func import Func
-from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
 
 
-class ModelCard(Base, Func):
+class ModelCard(db.Model, Func):
     __tablename__ = "card"
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
 
     def __init__(self, name):
-        self.name = name
+        super().__init__(
+            name=name
+        )

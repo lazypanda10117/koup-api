@@ -1,7 +1,7 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from app import app
 
 user = os.environ.get("DB_USER", "robot")
 password = os.environ.get("DB_PASS", "rootpwd")
@@ -16,7 +16,9 @@ if postgresURL == "None" :
         user, password, host, port, name
     )
 
-engine = create_engine(postgresURL, pool_recycle=7200)
-session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-Base = declarative_base()
-Base.query = session.query_property()
+app.config["SQLALCHEMY_DATABASE_URI"] = postgresURL
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 7200
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)

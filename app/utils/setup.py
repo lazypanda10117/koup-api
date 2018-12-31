@@ -1,15 +1,14 @@
-from app.db import Session, engine, Base
+from app.db import db
 # from app.models.model_room import ModelRoom
 # from app.models.model_player import ModelPlayer
 from app.models.model_card import ModelCard
 
-Base.metadata.create_all(engine)
 
-session = Session()
-cardList = ['Duke', 'Contessa', 'Assassin', 'Ambassador', 'Captain']
-for card in cardList:
-    for made in range(3):
-        session.add(ModelCard(card))
+def setup():
+    cardList = ['Duke', 'Contessa', 'Assassin', 'Ambassador', 'Captain']
+    for card in cardList:
+        for made in range(3):
+            db.session.add(ModelCard(card))
 
-session.commit()
-session.close()
+    db.session.commit()
+    db.session.close()

@@ -13,6 +13,6 @@ from app.schemas.schema import schema  # noga: F401
 
 
 app.add_url_rule(
-    '/card',
-    view_func=GraphQLView.as_view('card', schema=schema, graphiql=True))
+    '/graphql',
+    view_func=GraphQLView.as_view('api', schema=schema, graphiql=True))
 
