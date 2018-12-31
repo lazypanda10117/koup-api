@@ -1,6 +1,6 @@
 import graphene
 from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType, utils
+from graphene_sqlalchemy import SQLAlchemyConnectionField
 from .schema_card import Card, CardConnections, CreateCard, UpdateCard
 from .schema_player import Player, PlayerConnections, CreatePlayer, UpdatePlayer
 from .schema_room import Room, RoomConnections, CreateRoom, UpdateRoom

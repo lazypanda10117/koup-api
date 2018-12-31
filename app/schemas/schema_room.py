@@ -9,7 +9,7 @@ from app.models.model_room import ModelRoom
 
 class RoomAttribute:
     key = graphene.String(description="Key of Room.")
-    playerCap = graphene.Int(descrption="Max Capacity of Room.")
+    player_cap = graphene.Int(descrption="Max Capacity of Room.")
     deck = graphene.List(graphene.Int)
     state = graphene.Int(description="Game State.")
     swapping = graphene.Boolean(description="Swapping State of Game.")
@@ -59,3 +59,15 @@ class UpdateRoom(graphene.Mutation):
         data['last_update'] = datetime.now()
         room = generic.update_object(ModelRoom, data)
         return UpdateRoom(room=room)
+
+
+class DeleteRoom(graphene.Mutation):
+    room = graphene.Field(lambda: Room, description="Room deleted by this mutation.")
+
+    class Arguments:
+        input = UpdateRoomInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        room = generic.delete_object(ModelRoom, data)
+        return DeleteRoom(room=room)

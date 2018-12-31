@@ -52,3 +52,15 @@ class UpdatePlayer(graphene.Mutation):
         data = gqlUtil.input_to_dictionary(input)
         player = generic.update_object(ModelPlayer, data)
         return UpdatePlayer(player=player)
+
+
+class DeletePlayer(graphene.Mutation):
+    player = graphene.Field(lambda: Player, description="Player deleted by this mutation.")
+
+    class Arguments:
+        input = UpdatePlayerInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        player = generic.delete_object(ModelPlayer, data)
+        return DeletePlayer(player=player)

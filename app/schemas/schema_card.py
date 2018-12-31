@@ -51,3 +51,15 @@ class UpdateCard(graphene.Mutation):
         data = gqlUtil.input_to_dictionary(input)
         card = generic.update_object(ModelCard, data)
         return UpdateCard(card=card)
+
+
+class DeleteCard(graphene.Mutation):
+    card = graphene.Field(lambda: Card, description="Card deleted by this mutation.")
+
+    class Arguments:
+        input = UpdateCardInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        card = generic.delete_object(ModelCard, data)
+        return DeleteCard(card=card)

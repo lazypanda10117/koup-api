@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5a2a287a1b51
+Revision ID: 8f3eb91f3aad
 Revises: 
-Create Date: 2018-12-31 01:05:08.545186
+Create Date: 2018-12-31 01:22:57.205331
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5a2a287a1b51'
+revision = '8f3eb91f3aad'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,7 +28,7 @@ def upgrade():
     sa.Column('key', sa.String(), nullable=False),
     sa.Column('player_cap', sa.Integer(), nullable=False),
     sa.Column('deck', sa.ARRAY(sa.Integer()), nullable=True),
-    sa.Column('state', sa.Enum('waiting', 'initializing', 'onGoing', name='gamestate'), nullable=True),
+    sa.Column('state', sa.Integer(), nullable=True),
     sa.Column('swapping', sa.Boolean(), nullable=True),
     sa.Column('max_idle_time', sa.Integer(), nullable=True),
     sa.Column('last_update', sa.DateTime(), nullable=False),

@@ -1,14 +1,14 @@
 from app.db import db
-import enum
+from enum import IntEnum
 from app.utils.datetime import datetime
 from app.models.func import Func
 from sqlalchemy.orm import validates
 
 
-class GameState(enum.Enum):
-    waiting = 1
-    initializing = 2
-    onGoing = 3
+class GameState(IntEnum):
+    Waiting = 1
+    Initializing = 2
+    Running = 3
 
 
 class ModelRoom(db.Model, Func):
@@ -24,7 +24,7 @@ class ModelRoom(db.Model, Func):
         order_by='ModelPlayer.id'
     )
     deck = db.Column(db.ARRAY(db.Integer))
-    state = db.Column(db.Enum(GameState), default=GameState.waiting)
+    state = db.Column(db.Integer, default=int(GameState.Waiting))
     swapping = db.Column(db.Boolean, default=False)
     max_idle_time = db.Column(db.Integer, default=30)  # minutes
     last_update = db.Column(db.DateTime, nullable=False)
