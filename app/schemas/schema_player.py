@@ -1,9 +1,10 @@
+from random import shuffle
 import graphene
 from graphene import relay
-from random import shuffle
-import app.utils.graphqlUtil as gqlUtil
-import app.utils.generic as generic
 from graphene_sqlalchemy import SQLAlchemyObjectType
+import app.utils.graphqlUtil as gqlUtil
+import app.utils.datetime as datetime
+import app.utils.generic as generic
 from app.models.model_player import ModelPlayer
 from app.models.model_room import ModelRoom
 
@@ -74,53 +75,57 @@ class GetCardsInput(graphene.InputObjectType):
 
 
 class SwapAction:
-    def setSwapping(self, room_id, swapping):
+    @staticmethod
+    def setSwapping(room_id, swapping):
         room = generic.get_object(ModelRoom, dict(id=room_id))
-        room_data = gqlUtil.dumps(room)
+        room_data = gqlUtil.serialize(room, ['players'])
         room_data['swapping'] = swapping
         generic.update_object(ModelRoom, room_data)
 
 
 class GetCards(graphene.Mutation, SwapAction):
-    player = graphene.Field(lambda: Player, description="Player updated by this mutation.")
-
-    class Arguments:
-        input = GetCardsInput(required=True)
-
-    def get_action(self, input):
+    @staticmethod
+    def get_action(input):
         data = gqlUtil.input_to_dictionary(input)
-
         player = generic.get_object(ModelPlayer, data)
-        player_data = gqlUtil.dumps(player)
+        player_data = gqlUtil.serialize(player)
 
         room = generic.get_object(ModelRoom, dict(id=player.room_id))
-        room_data = gqlUtil.dumps(room)
+        room_data = gqlUtil.serialize(room, ['players'])
 
         get_hand = room.deck[:data['numCards']]
+
         player_data['hand'] = player.hand + get_hand
-
         room_data['deck'] = room.deck[data['numCards']:]
-
+        room_data['last_update'] = datetime.datetime.utcnow()
         player = generic.update_object(ModelPlayer, player_data)
         generic.update_object(ModelRoom, room_data)
         return player
 
+    player = graphene.Field(lambda: Player, description="Player updated by this mutation (get card).")
+
+    class Arguments:
+        input = GetCardsInput(required=True)
+
     def mutate(self, info, input):
-        player = self.get_action(input)
-        self.setSwapping(player.room_id, False)
+        player = GetCards.get_action(input)
+        GetCards.setSwapping(player.room_id, False)
         return GetCards(player=player)
 
 
 class PutCardsInput(graphene.InputObjectType):
     id = graphene.ID(required=True, description="Global Id of the Player.")
-    hand = graphene.List(required=True, description="Cards to be Swapped")
+    hand = graphene.List(graphene.Int, required=True, description="Cards to be Swapped")
 
 
 class PutCards(graphene.Mutation, SwapAction):
+    player = graphene.Field(lambda: Player, description="Player updated by this mutation (put card).")
+
     class Arguments:
         input = PutCardsInput(required=True)
 
-    def putValidation(self, swapCards, selfCards, deck):
+    @staticmethod
+    def putValidation(swapCards, selfCards, deck):
         for card in swapCards:
             if card in deck:
                 err = "Card Already in Deck"
@@ -129,16 +134,17 @@ class PutCards(graphene.Mutation, SwapAction):
                 err = "Card Swapped Does Not Belong to You."
                 raise SystemError(err)
 
-    def put_action(self, input):
+    @staticmethod
+    def put_action(input):
         data = gqlUtil.input_to_dictionary(input)
 
         player = generic.get_object(ModelPlayer, data)
-        player_data = gqlUtil.dumps(player)
+        player_data = gqlUtil.serialize(player)
 
         room = generic.get_object(ModelRoom, dict(id=player.room_id))
-        room_data = gqlUtil.dumps(room)
+        room_data = gqlUtil.serialize(room)
 
-        self.putValidation(data['hand'], player.hand, room.deck)
+        PutCards.putValidation(data['hand'], player.hand, room.deck)
 
         dumped_hand = data['hand']
         for card in dumped_hand:
@@ -146,26 +152,27 @@ class PutCards(graphene.Mutation, SwapAction):
 
         room_data['deck'] = room.deck + dumped_hand
         shuffle(room_data['deck'])
+        room_data['last_update'] = datetime.datetime.utcnow()
 
         player = generic.update_object(ModelPlayer, player_data)
         generic.update_object(ModelRoom, room_data)
         return player
 
     def mutate(self, info, input):
-        player = self.put_action(input)
-        self.setSwapping(player.room_id, False)
+        player = PutCards.put_action(input)
+        PutCards.setSwapping(player.room_id, False)
         return PutCards(player=player)
 
 
 class RevealCards(graphene.Mutation):
-    player = graphene.Field(lambda: Player, description="Player updated by this mutation.")
+    player = graphene.Field(lambda: Player, description="Player updated by this mutation (reveal card).")
 
     class Arguments:
         input = PutCardsInput(required=True)
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
-        PutCards().put_action(input)
-        player = GetCards().get_action(GetCardsInput(id=data['id'], numCards=1))
+        PutCards.put_action(input)
+        player = GetCards.get_action(GetCardsInput(id=data['id'], numCards=1))
         return RevealCards(player=player)
 

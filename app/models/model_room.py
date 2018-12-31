@@ -1,9 +1,10 @@
-from app.db import db
 from enum import IntEnum
-import app.utils.datetime as datetime
-from app.models.func import Func
-from random import random, shuffle, randint
+from random import shuffle, randint
 from sqlalchemy.orm import validates
+from app.db import db
+from app.models.func import Func
+import app.utils.datetime as datetime
+import app.utils.converter as converter
 
 
 class GameState(IntEnum):
@@ -19,8 +20,7 @@ class ModelRoom(db.Model, Func):
     player_cap = db.Column(db.Integer, default=4, nullable=False)
     players = db.relationship(
         'ModelPlayer',
-        backref='room',
-        cascade='delete,all',
+        backref=db.backref('room', cascade='delete,all'),
         lazy=True,
         order_by='ModelPlayer.id'
     )
@@ -38,7 +38,7 @@ class ModelRoom(db.Model, Func):
             max_idle_time=30,
             last_update=datetime.datetime.utcnow()
     ):
-        deck = shuffle(deck)
+        shuffle(deck)
         key = randint(1, 100001)
         super().__init__(
             key=key,
@@ -58,5 +58,5 @@ class ModelRoom(db.Model, Func):
             state=self.state,
             swapping=self.swapping,
             max_idle_time=self.max_idle_time,
-            last_update=self.last_update
+            last_update=converter.date_converter(self.last_update)
         )

@@ -1,5 +1,5 @@
 from graphql_relay.node.node import from_global_id
-import json
+import app.utils.json as json
 
 
 def input_to_dictionary(input):
@@ -12,5 +12,5 @@ def input_to_dictionary(input):
     return dictionary
 
 
-def dumps(obj):
-    json.dumps(obj)
+def serialize(obj, filter=[]):
+    return {key: val for key, val in json.loads(json.dumps(obj)).items() if key not in filter}

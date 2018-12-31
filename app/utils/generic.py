@@ -9,7 +9,7 @@ def get_object(cls, data):
     except:
         print("Failed to get object")
         raise
-    return queryCmd(id)
+    return obj
 
 
 def create_object(cls, data):
@@ -28,6 +28,8 @@ def update_object(cls, data):
     id = data['id']
     queryCmd = (lambda id: db.session.query(cls).get(id))
     obj = queryCmd(id)
+    print("data to be updataed: ")
+    print(data)
     obj.update_from_dict(data)
     try:
         db.session.commit()

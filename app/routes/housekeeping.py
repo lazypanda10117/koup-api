@@ -22,7 +22,7 @@ def purge_idle_rooms(idle_min):
             db.session.rollback()
             print("Failed to delete expired rooms")
             raise
-    elif isinstance(idle_min, str) and idle_min=="dynamic":
+    elif isinstance(idle_min, str) and idle_min == "dynamic":
         num_purged = 0
         all_rooms = db.session.query(ModelRoom).all()
         for room in all_rooms:

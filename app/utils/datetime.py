@@ -18,5 +18,4 @@ def parse_time(time_str):
 
 
 def time_back(minutes):
-    print(type(minutes))
     return datetime.utcnow() - timedelta(minutes=minutes)

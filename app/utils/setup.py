@@ -5,7 +5,7 @@ from app.models.model_card import ModelCard
 
 
 def setup():
-    if not db.session.query(ModelCard).all().count():
+    if not db.session.query(ModelCard).count():
         cardList = ['Duke', 'Contessa', 'Assassin', 'Ambassador', 'Captain']
         for card in cardList:
             for made in range(3):

@@ -1,11 +1,10 @@
 import graphene
+from graphene import relay
+from graphene_sqlalchemy import SQLAlchemyObjectType
 import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic
 import app.utils.datetime as datetime
-from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyObjectType
 from app.models.model_room import ModelRoom
-from random import shuffle
 
 
 class RoomAttribute:
@@ -41,6 +40,7 @@ class CreateRoom(graphene.Mutation):
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
+        data['last_update'] = datetime.datetime.utcnow()
         room = generic.create_object(ModelRoom, data)
         return CreateRoom(room=room)
 

@@ -1,8 +1,8 @@
 import graphene
-import app.utils.graphqlUtil as gqlUtil
-import app.utils.generic as generic
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
+import app.utils.graphqlUtil as gqlUtil
+import app.utils.generic as generic
 from app.models.model_card import ModelCard
 
 
