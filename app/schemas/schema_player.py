@@ -155,5 +155,7 @@ class RevealCards(graphene.Mutation):
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
-        PutCards().put_action()
-        GetCards().get_action()
+        PutCards().put_action(input)
+        player = GetCards().get_action(GetCardsInput(id=data['id'], numCards=1))
+        return RevealCards(player=player)
+

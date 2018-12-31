@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ad14357-c3da-4838-99ba-f8638aa5801e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/rebuild.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/model_card.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/model_card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/model_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/model_player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/model_room.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/model_room.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/housekeeping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/housekeeping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/schemas/schema_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/schema_player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/schema_room.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/schema_room.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/generic.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/generic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/graphqlUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/graphqlUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/koup-api.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/koup-api.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/koup-api.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Main.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,35 +26,45 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/build.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/Clean_Start.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="360">
+                <caret line="24" selection-start-line="24" selection-end-line="24" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/Main.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor />
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/schemas/schema_player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+            <state relative-caret-position="1487">
+              <caret line="159" column="40" selection-start-line="159" selection-start-column="40" selection-end-line="159" selection-end-column="40" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/init.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/rebuild.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="375">
-                <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -161,7 +160,6 @@
         <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/scripts/build.sh" />
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/scripts/start.sh" />
         <option value="$PROJECT_DIR$/app/models/base.py" />
@@ -192,10 +190,11 @@
         <option value="$PROJECT_DIR$/app/models/model_player.py" />
         <option value="$PROJECT_DIR$/app/models/model_card.py" />
         <option value="$PROJECT_DIR$/app/utils/graphqlUtil.py" />
-        <option value="$PROJECT_DIR$/app/schemas/schema_player.py" />
         <option value="$PROJECT_DIR$/app/routes/home.py" />
         <option value="$PROJECT_DIR$/app/utils/setup.py" />
         <option value="$PROJECT_DIR$/scripts/rebuild.md" />
+        <option value="$PROJECT_DIR$/app/schemas/schema_player.py" />
+        <option value="$PROJECT_DIR$/scripts/build.sh" />
       </list>
     </option>
   </component>
@@ -249,6 +248,11 @@
             <path>
               <item name="koup-api" type="b2602c69:ProjectViewProjectNode" />
               <item name="koup-api" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="koup-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="koup-api" type="462c0819:PsiDirectoryNode" />
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -260,8 +264,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app" />
     </key>
@@ -510,13 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -531,14 +528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/koup-api.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -627,16 +616,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/schemas/schema_player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/init.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -661,6 +640,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/schemas/schema_player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1487">
+          <caret line="159" column="40" selection-start-line="159" selection-start-column="40" selection-end-line="159" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/utils/graphqlUtil.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -671,13 +660,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/rebuild.md">
+    <entry file="file://$PROJECT_DIR$/docs/Main.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="375">
-            <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/Clean_Start.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="360">
+            <caret line="24" selection-start-line="24" selection-end-line="24" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/build.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
         </state>
       </provider>
     </entry>
