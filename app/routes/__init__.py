@@ -1,3 +1,3 @@
 from app.routes import (  # noqa:F401
-    home, errors
+    home, errors, housekeeping
 )

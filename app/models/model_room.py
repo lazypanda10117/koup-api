@@ -1,6 +1,6 @@
 from app.db import db
 from enum import IntEnum
-from app.utils.datetime import datetime
+import app.utils.datetime as datetime
 from app.models.func import Func
 from sqlalchemy.orm import validates
 
@@ -35,7 +35,7 @@ class ModelRoom(db.Model, Func):
             player_cap=4,
             deck=range(15),
             max_idle_time=30,
-            last_update=datetime.now()
+            last_update=datetime.datetime.utcnow()
     ):
         super().__init__(
             key=key,

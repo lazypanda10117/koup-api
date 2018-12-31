@@ -17,7 +17,6 @@ def update_object(cls, data):
     id = data['id']
     queryCmd = (lambda id: db.session.query(cls).get(id))
     obj = queryCmd(id)
-
     obj.update_from_dict(data)
     try:
         db.session.commit()

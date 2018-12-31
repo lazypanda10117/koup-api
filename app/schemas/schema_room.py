@@ -1,7 +1,7 @@
 import graphene
 import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic
-from app.utils.datetime import datetime
+import app.utils.datetime as datetime
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
 from app.models.model_room import ModelRoom
@@ -56,7 +56,7 @@ class UpdateRoom(graphene.Mutation):
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
-        data['last_update'] = datetime.now()
+        data['last_update'] = datetime.datetime.utcnow()
         room = generic.update_object(ModelRoom, data)
         return UpdateRoom(room=room)
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 DATETIME_FORMAT = "%d/%m/%Y %I:%M:%S %p"
 
@@ -15,3 +15,8 @@ def parse_time(time_str):
     Parses a time string into a datetime.
     """
     return datetime.strptime(time_str, DATETIME_FORMAT)
+
+
+def time_back(minutes):
+    print(type(minutes))
+    return datetime.utcnow() - timedelta(minutes=minutes)
