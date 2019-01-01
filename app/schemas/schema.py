@@ -5,7 +5,7 @@ from .schema_card import Card, CardConnections, CreateCard, UpdateCard, DeleteCa
 from .schema_player import Player, PlayerConnections, \
     CreatePlayer, UpdatePlayer, DeletePlayer, \
     PutCards, GetCards, RevealCards, \
-    StartRoom, JoinRoom
+    StartRoom, JoinRoom, JoinChecker
 from .schema_room import Room, RoomConnections, CreateRoom, UpdateRoom, DeleteRoom, RestartRoom
 
 
@@ -32,6 +32,7 @@ class Mutation(graphene.ObjectType):
 
     startRoom = StartRoom.Field()
     joinRoom = JoinRoom.Field()
+    joinChecker = JoinChecker.Field()
     restartRoom = RestartRoom.Field()
 
     swapStart = GetCards.Field()

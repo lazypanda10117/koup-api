@@ -218,36 +218,52 @@ class JoinRoom(graphene.Mutation):
 
     def mutate(self, info, input):
         data = gqlUtil.input_to_dictionary(input)
-        room = generic.query_object(ModelRoom, key=data['room_key'])
-        if room:
-            room = room[0]
-            if room.state == int(GameState.Waiting):
-                if room.player_cap > len(room.players):
-                    player = generic.create_object(ModelPlayer, dict(room_id=room.id))
 
-                    get_card_dict = gqlUtil.serialize(player)
-                    get_card_dict['numCards'] = 2
-                    GetCards.get_action(get_card_dict)
+        room = JoinChecker.join_validation(data)
+        player = generic.create_object(ModelPlayer, dict(room_id=room.id))
 
-                    player = generic.get_object(ModelPlayer, dict(id=player.id))
+        get_card_dict = gqlUtil.serialize(player)
+        get_card_dict['numCards'] = 2
+        GetCards.get_action(get_card_dict)
 
-                    if room.rejoin > 0:
-                        new_room = generic.get_object(ModelRoom, gqlUtil.serialize(room, ['players']))
-                        if len(new_room.players) == new_room.rejoin:
-                            new_room_data = gqlUtil.serialize(new_room, ['players'])
-                            new_room_data['state'] = 2  # Automatically Starts Game
-                            generic.update_object(ModelRoom, new_room_data)
-                        else:
-                            print("Still Waiting for Others to Rejoin Game.")
-                    else:
-                        print("This Join Request is not a Rejoin Request.")
+        player = generic.get_object(ModelPlayer, dict(id=player.id))
 
-                else:
-                    raise SystemError('Cannot Join Room as Room Capacity Reached.')
+        if room.state == int(GameState.Rejoining) and room.rejoin > 0:
+            new_room = generic.get_object(ModelRoom, gqlUtil.serialize(room, ['players']))
+            if len(new_room.players) >= new_room.rejoin:
+                new_room_data = gqlUtil.serialize(new_room, ['players'])
+                new_room_data['state'] = int(GameState.Running)  # Automatically Starts Game
+                generic.update_object(ModelRoom, new_room_data)
             else:
-                raise SystemError('Cannot Join Room as Game is Running.')
+                print("Still Waiting for Others to Rejoin Game.")
         else:
-            raise SystemError('No Such Room with Key: ' + data['room_key'] + ' Exists.')
+            print("This Join Request is not a Rejoin Request.")
+
         return JoinRoom(player=player)
 
 
+class JoinChecker(graphene.Mutation):
+    room = graphene.Field(lambda: Room, description="Room updated by this mutation (join room checker).")
+
+    class Arguments:
+        input = RoomActionInput(required=True)
+
+    @staticmethod
+    def join_validation(data):
+        room = generic.query_object(ModelRoom, key=data['room_key'])
+        if not room:
+            raise SystemError('No Such Room with Key: ' + data['room_key'] + ' Exists.')
+        else:
+            room = room[0]
+            if room.state not in [int(GameState.Waiting), int(GameState.Rejoining)]:
+                raise SystemError('Cannot Join Room as Game State is Incompatible.')
+            else:
+                if room.player_cap <= len(room.players):
+                    raise SystemError('Cannot Join Room as Room Capacity Reached.')
+                else:
+                    return room
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+        room = JoinChecker.join_validation(data)
+        return JoinChecker(room=room)
