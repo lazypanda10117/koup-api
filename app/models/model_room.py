@@ -12,6 +12,7 @@ import app.utils.converter as converter
 class GameState(IntEnum):
     Waiting = 1
     Running = 2
+    Rejoining = 3
 
 
 class ModelRoom(db.Model, Func):

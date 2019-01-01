@@ -5,9 +5,10 @@ from graphene_sqlalchemy import SQLAlchemyObjectType
 import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic
 import app.utils.datetime as datetime
-from app.models.model_room import ModelRoom
+from app.models.model_room import ModelRoom, GameState
 from app.models.model_player import ModelPlayer
 from app.models.model_card import ModelCard
+
 
 class RoomAttribute:
     key = graphene.String(description="Key of Room.")
@@ -101,7 +102,7 @@ class RestartRoom(graphene.Mutation):
         shuffle(new_deck)
 
         room_data['deck'] = new_deck
-        room_data['state'] = 3
+        room_data['state'] = int(GameState.Rejoining)
         room_data['swapping'] = False
         room_data['rejoin'] = player_count
         room_data['last_update'] = datetime.datetime.utcnow()
