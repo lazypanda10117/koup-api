@@ -20,10 +20,22 @@ class RoomAttribute:
     last_update = graphene.DateTime(description="Time of Last Invoked Action.")
 
 
+class RoomNode(relay.Node):
+    class Meta:
+        name = 'RoomNode'
+
+    @classmethod
+    def get_node_from_global_id(cls, info, global_id, only_type=None):
+        room = generic.query_object(ModelRoom, key=global_id)
+        assert room, "No matching Global ID with Given Key"
+        global_decoded_id = super().to_global_id(only_type._meta.name, room[0].id)
+        return super().get_node_from_global_id(info, global_decoded_id, only_type)
+
+
 class Room(SQLAlchemyObjectType):
     class Meta:
         model = ModelRoom
-        interfaces = (graphene.relay.Node,)
+        interfaces = (RoomNode,)
 
 
 class RoomConnections(relay.Connection):

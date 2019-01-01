@@ -6,7 +6,7 @@ from .schema_player import Player, PlayerConnections, \
     CreatePlayer, UpdatePlayer, DeletePlayer, \
     PutCards, GetCards, RevealCards, \
     StartRoom, JoinRoom, JoinChecker
-from .schema_room import Room, RoomConnections, CreateRoom, UpdateRoom, DeleteRoom, RestartRoom
+from .schema_room import Room, RoomNode, RoomConnections, CreateRoom, UpdateRoom, DeleteRoom, RestartRoom
 
 
 class Query(graphene.ObjectType):
@@ -15,7 +15,7 @@ class Query(graphene.ObjectType):
     allCards = SQLAlchemyConnectionField(CardConnections)
     player = relay.Node.Field(Player)
     allPlayers = SQLAlchemyConnectionField(PlayerConnections)
-    room = relay.Node.Field(Room)
+    room = RoomNode.Field(Room)
     allRooms = SQLAlchemyConnectionField(RoomConnections)
 
 
