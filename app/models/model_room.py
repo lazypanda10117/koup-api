@@ -28,6 +28,7 @@ class ModelRoom(db.Model, Func):
     deck = db.Column(db.ARRAY(db.Integer))
     state = db.Column(db.Integer, default=int(GameState.Waiting))
     swapping = db.Column(db.Boolean, default=False)
+    rejoin = db.Column(db.Integer, default=0)
     max_idle_time = db.Column(db.Integer, default=30)  # minutes
     last_update = db.Column(db.DateTime, nullable=False)
 

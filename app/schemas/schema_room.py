@@ -1,3 +1,4 @@
+from random import shuffle
 import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
@@ -5,7 +6,8 @@ import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic
 import app.utils.datetime as datetime
 from app.models.model_room import ModelRoom
-
+from app.models.model_player import ModelPlayer
+from app.models.model_card import ModelCard
 
 class RoomAttribute:
     key = graphene.String(description="Key of Room.")
@@ -72,3 +74,37 @@ class DeleteRoom(graphene.Mutation):
         data = gqlUtil.input_to_dictionary(input)
         room = generic.delete_object(ModelRoom, data)
         return DeleteRoom(room=room)
+
+
+class RestartRoomInput(graphene.InputObjectType, RoomAttribute):
+    key = graphene.ID(required=True, description="Key of the Room.")
+
+
+class RestartRoom(graphene.Mutation):
+    room = graphene.Field(lambda: Room, description="Room updated by this mutation (restart room).")
+
+    class Arguments:
+        input = RestartRoomInput(required=True)
+
+    def mutate(self, info, input):
+        data = gqlUtil.input_to_dictionary(input)
+
+        player_count = 0
+        for player in generic.query_object(ModelRoom, key=data['key']):
+            generic.delete_object(ModelPlayer, gqlUtil.serialize(player))
+            player_count += 1
+
+        room = generic.get_object(ModelRoom, dict(key=data['key']))
+        room_data = gqlUtil.serialize(room)
+
+        new_deck = [card.id for card in generic.query_object(ModelCard)]
+        shuffle(new_deck)
+
+        room_data['deck'] = new_deck
+        room_data['state'] = 3
+        room_data['swapping'] = False
+        room_data['rejoin'] = player_count
+        room_data['last_update'] = datetime.datetime.utcnow()
+        room = generic.update_object(ModelRoom, room_data)
+
+        return RestartRoom(room=room)

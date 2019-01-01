@@ -60,6 +60,20 @@ query{
 ```
 
 
+> Restarting a Room
+```graphql
+query{
+  restartRoom(input: {
+    key: <int: room key>
+  }){
+    room{
+      ... fields ...
+    }
+  }
+}
+```
+
+
 ## Player Queries:
 
 > Getting All Players

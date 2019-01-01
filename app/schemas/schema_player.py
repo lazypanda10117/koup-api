@@ -185,7 +185,7 @@ class RevealCards(graphene.Mutation):
 
 
 class RoomActionInput(graphene.InputObjectType):
-    room_key = graphene.ID(required=True, description="ID of Room that Player Belongs To.")
+    room_key = graphene.ID(required=True, description="Key of Room that Player Belongs To.")
 
 
 class StartRoom(graphene.Mutation):
@@ -224,10 +224,24 @@ class JoinRoom(graphene.Mutation):
             if room.state == int(GameState.Waiting):
                 if room.player_cap > len(room.players):
                     player = generic.create_object(ModelPlayer, dict(room_id=room.id))
+
                     get_card_dict = gqlUtil.serialize(player)
                     get_card_dict['numCards'] = 2
                     GetCards.get_action(get_card_dict)
+
                     player = generic.get_object(ModelPlayer, dict(id=player.id))
+
+                    if room.rejoin > 0:
+                        new_room = generic.get_object(ModelRoom, gqlUtil.serialize(room, ['players']))
+                        if len(new_room.players) == new_room.rejoin:
+                            new_room_data = gqlUtil.serialize(new_room, ['players'])
+                            new_room_data['state'] = 2  # Automatically Starts Game
+                            generic.update_object(ModelRoom, new_room_data)
+                        else:
+                            print("Still Waiting for Others to Rejoin Game.")
+                    else:
+                        print("This Join Request is not a Rejoin Request.")
+
                 else:
                     raise SystemError('Cannot Join Room as Room Capacity Reached.')
             else:
