@@ -138,7 +138,7 @@ query{
 mutation{
   createRoom(input: {
     playerCap: <int>
-    state: <int: 1=waiting, 2=running>
+    state: <int: 1=waiting, 2=running, 3=rejoining>
     swapping: <bool>
     maxIdleTime: <int>
   }){
