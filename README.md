@@ -1,5 +1,8 @@
-# API for Koup (@stevenw47)
+# API for Koup (@stevenw47) 
+\
+[![Build Status](https://travis-ci.org/lazypanda10117/koup-api.svg?branch=master)](https://travis-ci.org/lazypanda10117/koup-api)
 
+\
 Demo: https://koup-api.herokuapp.com/
 
 \
