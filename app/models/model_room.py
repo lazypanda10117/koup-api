@@ -19,7 +19,7 @@ class ModelRoom(db.Model, Func):
     __tablename__ = "room"
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String, nullable=False, unique=True)
-    player_cap = db.Column(db.Integer, default=4, nullable=False)
+    player_cap = db.Column(db.Integer, default=6, nullable=False)
     players = db.relationship(
         'ModelPlayer',
         backref=db.backref('room', cascade='delete,all'),
