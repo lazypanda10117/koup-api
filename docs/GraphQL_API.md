@@ -22,7 +22,7 @@ query{
 > Getting a Room with Room ID
 ```graphql
 query{
-  room(id:<string: room id>){
+  room(id: <int: room key>){
     room{
       ... fields ...
     }
