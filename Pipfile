@@ -19,6 +19,8 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-cors = "*"
 pytest-flask-sqlalchemy = "*"
+pluggy = "*"
+pytest-dotenv = "*"
 
 [requires]
 python_version = "3.6.*"
