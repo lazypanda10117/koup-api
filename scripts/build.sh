@@ -16,7 +16,7 @@ then
     echo "Running Program"
     $(make prod-run)
 else
-    "Build Type: ${BUILD_TYPE} Does Not Exist. Resolving to Default Action"
+    echo "Build Type: ${BUILD_TYPE} Does Not Exist. Resolving to Default Action"
     echo "Running Program"
     $(make prod-run)
 fi
