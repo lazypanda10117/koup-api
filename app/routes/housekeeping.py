@@ -37,9 +37,6 @@ def purge_idle_rooms(idle_min):
         all_rooms = db.session.query(ModelRoom).all()
         for room in all_rooms:
             if room.last_update < datetime.time_back(room.max_idle_time):
-                for player in room.players:
-                    player_data = gqlUtil.serialize(player)
-                    generic.delete_object(ModelPlayer, player_data['id'])
                 generic.delete_object(ModelRoom, dict(id=room.id))
                 num_purged += 1
     else:
