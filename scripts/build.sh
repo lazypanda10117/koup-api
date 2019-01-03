@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-BUILD_TYPE=$(python3 ./scripts/build.py)
+if [[ -f .env ]];
+then
+    BUILD_TYPE=$(grep BUILD_TYPE .env | cut -d '=' -f 2-)
+    BUILD_TYPE="${BUILD_TYPE// }"
+else
+    BUILD_TYPE=$(python3 ./scripts/build.py 1)
+fi
+
 if [[ ${BUILD_TYPE} = "Init" ]];
 then
     echo "Build Type: ${BUILD_TYPE} "
