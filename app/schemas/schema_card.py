@@ -1,5 +1,5 @@
 import graphene
-from graphene import relay
+from graphene import relay, resolve_only_args
 from graphene_sqlalchemy import SQLAlchemyObjectType
 import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic
@@ -13,7 +13,10 @@ class CardAttribute:
 class Card(SQLAlchemyObjectType, CardAttribute):
     class Meta:
         model = ModelCard
+        model.db_id = model.id
         interfaces = (graphene.relay.Node,)
+
+    db_id = graphene.Int()
 
 
 class CardConnections(relay.Connection):

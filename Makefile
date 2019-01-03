@@ -65,12 +65,12 @@ prod-init:
 	@flask db init
 	@flask db migrate
 	@flask db upgrade
-	@gunicorn app:app --preload
+	@gunicorn app:app
 
 prod-update:
 	@flask db migrate
 	@flask db upgrade
-	@gunicorn app:app --preload
+	@gunicorn app:app
 
 prod-run:
 	@gunicorn app:app --preload
