@@ -2,6 +2,7 @@ from app import app
 from app.db import db
 import app.utils.datetime as datetime
 import app.utils.generic as generic
+import app.utils.graphqlUtil as gqlUtil
 from app.models.model_room import ModelRoom
 from app.models.model_player import ModelPlayer
 
@@ -37,7 +38,8 @@ def purge_idle_rooms(idle_min):
         for room in all_rooms:
             if room.last_update < datetime.time_back(room.max_idle_time):
                 for player in room.players:
-                    generic.delete_object(ModelPlayer, player.id)
+                    player_data = gqlUtil.input_to_dictionary(player)
+                    generic.delete_object(ModelPlayer, player_data['id'])
                 generic.delete_object(ModelRoom, dict(id=room.id))
                 num_purged += 1
     else:
