@@ -1,6 +1,6 @@
 import string
 from enum import IntEnum
-from random import shuffle, random
+from random import shuffle, choices
 from sqlalchemy.orm import validates
 from app.db import db
 from app.models.func import Func
@@ -37,7 +37,8 @@ class ModelRoom(db.Model, Func):
     def makeRoomKey(self, key):
         def autoRoomKey():
             def genAlphaNumKey(len):
-                return ''.join(random.choices(string.ascii_uppercase + string.digits, k=len))
+                return ''.join(choices(string.ascii_uppercase + string.digits, k=len))
+
             while True:
                 key = genAlphaNumKey(6)
                 try:
