@@ -34,7 +34,6 @@ class ModelRoom(db.Model, Func):
     max_idle_time = db.Column(db.Integer, default=30)  # minutes
     last_update = db.Column(db.DateTime, nullable=False)
 
-
     def makeRoomKey(self, key):
         def autoRoomKey():
             def genAlphaNumKey(len):
