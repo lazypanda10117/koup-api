@@ -1,5 +1,6 @@
+import string
 from enum import IntEnum
-from random import shuffle, randint
+from random import shuffle, random
 from sqlalchemy.orm import validates
 from app.db import db
 from app.models.func import Func
@@ -33,17 +34,37 @@ class ModelRoom(db.Model, Func):
     max_idle_time = db.Column(db.Integer, default=30)  # minutes
     last_update = db.Column(db.DateTime, nullable=False)
 
+
+    def makeRoomKey(self, key):
+        def autoRoomKey():
+            def genAlphaNumKey(len):
+                return ''.join(random.choices(string.ascii_uppercase + string.digits, k=len))
+            while True:
+                key = genAlphaNumKey(6)
+                try:
+                    generic.unique_integrity_check(self.__class__, key=key)
+                    return key
+                except SystemError as err:
+                    print(err)
+
+        def manualKey():
+            generic.unique_integrity_check(self.__class__, key=key)
+            return key
+
+        return autoRoomKey() if key is None else manualKey()
+
     def __init__(
             self,
-            key=0,
+            key=None,
             player_cap=4,
-            deck=list(range(15)),
+            deck=list(),
             max_idle_time=30,
             last_update=datetime.datetime.utcnow()
     ):
         deck = [card.id for card in generic.query_object(ModelCard)]
         shuffle(deck)
-        key = randint(1, 100001)
+        key = self.makeRoomKey(key)
+
         super().__init__(
             key=key,
             player_cap=player_cap,

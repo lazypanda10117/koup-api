@@ -1,3 +1,4 @@
+import app.utils.json as json
 from app.db import db
 
 
@@ -55,3 +56,12 @@ def delete_object(cls, data):
 def query_object(cls, **kwargs):
     obj = db.session.query(cls).filter_by(**kwargs).all()
     return obj
+
+
+def unique_integrity_check(cls, **kwargs):
+    if len(query_object(cls, **kwargs)):
+        error = "%s with unique attributes %s already exists." % (
+            cls.__name__,
+            json.dumps(kwargs)
+        )
+        raise SystemError(error)
