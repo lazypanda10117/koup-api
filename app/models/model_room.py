@@ -2,7 +2,7 @@ import string
 from enum import IntEnum
 from random import shuffle, choices
 from sqlalchemy.orm import validates
-from app.db import db
+from app import db
 from app.models.func import Func
 from app.models.model_card import ModelCard
 import app.utils.generic as generic

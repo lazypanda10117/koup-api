@@ -1,5 +1,5 @@
 from sqlalchemy.orm import validates
-from app.db import db
+from app import db
 from app.models.func import Func
 
 

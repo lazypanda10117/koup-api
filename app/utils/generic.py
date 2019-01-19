@@ -1,5 +1,5 @@
 import app.utils.json as json
-from app.db import db
+from app import db
 
 
 def get_object(cls, data):

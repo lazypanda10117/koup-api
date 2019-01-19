@@ -1,5 +1,5 @@
 from app import app
-from app.db import db
+from app import db
 import app.utils.datetime as datetime
 import app.utils.generic as generic
 import app.utils.graphqlUtil as gqlUtil
