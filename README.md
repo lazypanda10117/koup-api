@@ -1,5 +1,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c63178850504375b6ba0dac6314ac0c)](https://app.codacy.com/app/jeffreykam0415/koup-api?utm_source=github.com&utm_medium=referral&utm_content=lazypanda10117/koup-api&utm_campaign=Badge_Grade_Dashboard)
-# GraphQL API for Koup [![Build Status](https://travis-ci.org/lazypanda10117/koup-api.svg?branch=master)](https://travis-ci.org/lazypanda10117/koup-api)
+[![Build Status](https://travis-ci.org/lazypanda10117/koup-api.svg?branch=master)](https://travis-ci.org/lazypanda10117/koup-api)
+
+# GraphQL API for Koup 
 
 __What is Koup?__ 
 
