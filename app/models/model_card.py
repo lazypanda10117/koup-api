@@ -1,4 +1,3 @@
-from sqlalchemy.orm import validates
 from app import db
 from app.models.func import Func
 
@@ -8,9 +7,9 @@ class ModelCard(db.Model, Func):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String, nullable=False)
 
-    def __init__(self, type):
+    def __init__(self, card_type):
         super().__init__(
-            type=type
+            type=card_type
         )
 
     def __repr_json__(self):

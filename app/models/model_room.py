@@ -1,7 +1,6 @@
 import string
 from enum import IntEnum
 from random import shuffle, choices
-from sqlalchemy.orm import validates
 from app import db
 from app.models.func import Func
 from app.models.model_card import ModelCard
@@ -36,8 +35,8 @@ class ModelRoom(db.Model, Func):
 
     def makeRoomKey(self, key):
         def autoRoomKey():
-            def genAlphaNumKey(len):
-                return ''.join(choices(string.ascii_uppercase + string.digits, k=len))
+            def genAlphaNumKey(key_len):
+                return ''.join(choices(string.ascii_uppercase + string.digits, k=key_len))
 
             while True:
                 key = genAlphaNumKey(6)
@@ -57,7 +56,7 @@ class ModelRoom(db.Model, Func):
             self,
             key=None,
             player_cap=4,
-            deck=list(),
+            deck=None,
             max_idle_time=30,
             last_update=datetime.datetime.utcnow()
     ):

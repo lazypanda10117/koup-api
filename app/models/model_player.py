@@ -1,4 +1,3 @@
-from sqlalchemy.orm import validates
 from app import db
 from app.models.func import Func
 
@@ -10,7 +9,8 @@ class ModelPlayer(db.Model, Func):
     hand = db.Column(db.ARRAY(db.Integer))
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
 
-    def __init__(self, room_id, hand=list()):
+    def __init__(self, room_id, hand=None):
+        hand = [] if hand is None else hand
         super().__init__(
             hand=hand,
             room_id=room_id

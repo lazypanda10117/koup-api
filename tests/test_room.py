@@ -1,3 +1,5 @@
 class TestRoom():
     def test_rooms(self, db_session):
-        assert True
+        if self == self:
+            return True
+        return False

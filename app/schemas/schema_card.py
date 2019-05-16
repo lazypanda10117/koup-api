@@ -1,5 +1,5 @@
 import graphene
-from graphene import relay, resolve_only_args
+from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
 import app.utils.graphqlUtil as gqlUtil
 import app.utils.generic as generic

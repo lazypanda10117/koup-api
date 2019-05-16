@@ -2,9 +2,7 @@ from app import app
 from app import db
 import app.utils.datetime as datetime
 import app.utils.generic as generic
-import app.utils.graphqlUtil as gqlUtil
 from app.models.model_room import ModelRoom
-from app.models.model_player import ModelPlayer
 
 
 @app.route("/housekeeping/purge/<idle_min>", methods=["GET"])

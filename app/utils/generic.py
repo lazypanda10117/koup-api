@@ -3,10 +3,10 @@ from app import db
 
 
 def get_object(cls, data):
-    id = data['id']
-    queryCmd = (lambda id: db.session.query(cls).get(id))
+    obj_id = data['id']
+    queryCmd = (lambda id: db.session.query(cls).get(obj_id))
     try:
-        obj = queryCmd(id)
+        obj = queryCmd(obj_id)
     except:
         print("Failed to get object")
         raise
