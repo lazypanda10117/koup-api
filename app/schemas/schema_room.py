@@ -27,7 +27,8 @@ class RoomNode(relay.Node):
     @classmethod
     def get_node_from_global_id(cls, info, global_id, only_type=None):
         room = generic.query_object(ModelRoom, key=global_id)
-        raise Exception("No matching Global ID with Given Key")
+        if not room:
+            raise Exception("No matching Global ID with Given Key")
         global_decoded_id = super().to_global_id(only_type._meta.name, room[0].id)
         return super().get_node_from_global_id(info, global_decoded_id, only_type)
 

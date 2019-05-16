@@ -26,9 +26,9 @@ def create_object(cls, data):
 
 
 def update_object(cls, data):
-    id = data['id']
-    queryCmd = (lambda id: db.session.query(cls).get(id))
-    obj = queryCmd(id)
+    obj_id = data['id']
+    queryCmd = (lambda id: db.session.query(cls).get(obj_id))
+    obj = queryCmd(obj_id)
     obj.update_from_dict(data)
     try:
         db.session.commit()
@@ -36,13 +36,13 @@ def update_object(cls, data):
         db.session.rollback()
         print("Failed to update object")
         raise
-    return queryCmd(id)
+    return queryCmd(obj_id)
 
 
 def delete_object(cls, data):
-    id = data['id']
-    queryCmd = (lambda id: db.session.query(cls).get(id))
-    obj = queryCmd(id)
+    obj_id = data['id']
+    queryCmd = (lambda id: db.session.query(cls).get(obj_id))
+    obj = queryCmd(obj_id)
     db.session.delete(obj)
     try:
         db.session.commit()
