@@ -16,7 +16,6 @@ The corresponding front-end of Koup is created by [@stevenw47](https://github.co
 __Koup Demo!__ 
 
   - Koup API Demo: [https://koup-api.herokuapp.com/](https://koup-api.herokuapp.com/)
-
   - Koup App Demo (Front-end with API calls): [https://stevenw47.github.io/koup/#/](https://stevenw47.github.io/koup/#/)
 
 \
